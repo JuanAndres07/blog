@@ -1,8 +1,6 @@
 <x-app-layout>
 
-    <a href="{{route('posts.index')}}">Volver</a>
-
-    <h1>Formulario para crear un nuevo Post</h1>
+    <h1>Formulario para editar el Post</h1>
 
     @if ($errors->any())
 
@@ -18,14 +16,16 @@
         </div>
     @endif
 
-    <form action="{{route('posts.store')}}" method="POST">
+    <form action="{{route('posts.update', $post)}}" method="POST">
 
         {{-- Crear token --}}
         @csrf
+        {{-- Especificar en que metodo lo vamos a enviar --}}
+        @method('PUT')
 
         <label>
             Titulo:
-            <input type="text" name="title" value="{{old('title')}}"> {{-- verificar si hay errores de validación --}}
+            <input type="text" name="title" value="{{old('title', $post->title)}}">
         </label>
 
         <br>
@@ -33,7 +33,7 @@
 
         <label>
             Slug:
-            <input type="text" name="slug" value="{{old('slug')}}">
+            <input type="text" name="slug" value="{{old('slug', $post->slug)}}">
         </label>
 
         <br>
@@ -41,7 +41,7 @@
 
         <label>
             Categoría:
-            <input type="text" name="category" value="{{old('category')}}">
+            <input type="text" name="category" value="{{old('category', $post->category)}}">
         </label>
 
         <br>
@@ -49,17 +49,15 @@
 
         <label>
             Contenido:
-            <textarea name="content">{{old('content')}}</textarea>
+            <textarea name="content">{{old('content', $post->content)}}</textarea>
         </label>
 
         <br>
         <br>
 
         <button type="submit">
-            Crear Post
+            Actualizar Post
         </button>
 
     </form>
-
-
 </x-app-layout>

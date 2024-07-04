@@ -3,17 +3,29 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
+use App\Models\post;
+
+use function Pest\Laravel\get;
 
 Route::get('/', HomeController::class);
 
-Route::get('/posts', [PostController::class, 'index']);
+Route::resource('posts', PostController::class);
 
-Route::get('/posts/create', [PostController::class, 'create']);
+/* ->except(['destroy', 'edit']); */
+/* ->only(['index', 'create', 'store']); */
+/* ->parameters(['articulos' => 'post']) Cambiar el nombre de los parametros (las variables)
+->names('posts'); */
 
-Route::get('/posts/{post}', [PostController::class, 'show']);
+/* Route::apiResource('posts', PostController::class); Genera las rutas decesarias para un Api (Sin create ni edit) */
 
- 
+//GET
+//POST
+//PUT (Actualizar)
+//PATCH (Actualizar)
+//DELETE
 
-/*  Route::get('/post/{post}/{category}', function ($post, $category){
-    return "Aquí se mostrará el post {$post} de la categoría {$category}"; 
- }); */
+Route::get('prueba', function(){
+    $post = post::find(2);
+
+    dd($post -> is_active);
+});
